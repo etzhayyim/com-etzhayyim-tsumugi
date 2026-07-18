@@ -1,0 +1,5 @@
+;; schema/tsumugi.edn — Datomic/Datascript compatible actor schema
+;; :db/ident 属性定義のリスト。Datomic 固有キー(:db.install/_attribute 等)は使わない。
+;; Generated schema; regenerate through actor-owned EDN tooling.
+
+[#:db{:ident :kotoba.app/components, :valueType :db.type/string, :cardinality :db.cardinality/one} #:db{:ident :kotoba.app/name, :valueType :db.type/string, :cardinality :db.cardinality/one} #:db{:ident :kotoba.app/placement, :valueType :db.type/string, :cardinality :db.cardinality/one} #:db{:ident :kotoba.app/version, :valueType :db.type/string, :cardinality :db.cardinality/one}]

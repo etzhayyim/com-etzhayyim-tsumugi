@@ -50,7 +50,7 @@ async function main() {
   console.log("resolve → integrity → execute (tsumugi WASM actor)\n");
 
   // 1) resolve DID document
-  const did = JSON.parse(readFileSync(join(DIR, "tsumugi.did.json"), "utf8"));
+  const did = JSON.parse(readFileSync(join(DIR, "..", "..", "wire", "wasm", "tsumugi.did.json"), "utf8"));
   pass(`DID resolved: ${did.id}`);
 
   // 2) find the WASM component service

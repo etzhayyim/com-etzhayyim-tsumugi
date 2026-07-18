@@ -1,0 +1,10 @@
+{:canonical :edn
+ :required ["actor.edn" "identity.edn" "manifest.edn" "dependencies.edn"
+            "kotoba.app.edn" "dna/tsumugi.dna.edn" "dna/tsumugi.integrity.edn"
+            "schema/tsumugi.edn"]
+ :wire-json ["wire/fixtures/ingest-influence/wikidata-live-sample.sparql.json"
+             "wire/fixtures/ingest-influence/wikidata-sample.json"
+             "wire/fixtures/ingest-scale/orgs.json" "wire/identity/did.json"
+             "wire/wasm/tsumugi.did.json"]
+ :forbidden-extensions [".go" ".sh" ".wasm" ".jsonld" ".bpmn"]
+ :forbidden-files ["go.mod" "go.sum"]}

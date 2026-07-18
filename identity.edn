@@ -1,0 +1,3 @@
+{:identity/id :etzhayyim/tsumugi
+ :identity/did "did:web:etzhayyim.com:tsumugi"
+ :identity/repository "etzhayyim/com-etzhayyim-tsumugi"}

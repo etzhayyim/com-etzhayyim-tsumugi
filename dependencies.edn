@@ -1,0 +1,3 @@
+{:dependencies [{:dependency/id :kotoba-lang/io-multiformats
+                 :dependency/repository "https://github.com/kotoba-lang/io-multiformats.git"
+                 :dependency/revision "af315519c0ae181da9e8dc532abc2d22c782efd4"}]}
