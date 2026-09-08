@@ -13,7 +13,7 @@
   stdlib only, deterministic. The Python `read_edn` import + os.environ gate live only in
   main (file read + --execute refusal), omitted from this port; the core takes already-loaded
   latent datoms."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn v
   "Format a value for EDN output (ingest.py style)."

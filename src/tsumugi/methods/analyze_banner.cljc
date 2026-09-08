@@ -24,7 +24,7 @@
   binary value (py-round); Python str(float) shortest-repr = Java Double/toString with integral
   → 'N.0' (fmt-num) — together they reproduce the f-string bytes. Dict first-insertion order is
   preserved (::order metadata) so STABLE sorts tie exactly the Python dict iteration order."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             #?(:clj [clojure.java.io :as io])))
 
 ;; ── minimal EDN reader ────────────────────────────────────────────────────────────────────

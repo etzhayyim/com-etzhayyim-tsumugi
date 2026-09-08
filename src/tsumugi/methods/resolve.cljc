@@ -10,7 +10,7 @@
   stdlib only, deterministic. The Python `read_edn` import is used only by main (file read);
   the core takes already-loaded orgs + edges. `math` is imported by the module but the core
   uses only arithmetic (noisy-OR product + round)."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn v
   "Format a value for EDN output (ingest.py style)."

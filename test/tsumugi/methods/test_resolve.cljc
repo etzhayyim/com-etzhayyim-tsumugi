@@ -7,7 +7,7 @@
   verbatim — a genuine cross-language oracle. Pins: only latent (unclaimed / :latent)
   orgs resolved, existence = noisy-OR over :evidence edges (round-4), the frontier
   classification, and aggregate-first method-versioning (G2/N1)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.resolve :as r]))
 
 (def orgs
@@ -61,7 +61,7 @@
 
 (deftest to-edn-shape
   (let [edn (r/to-edn (r/resolve-latent-entities orgs edges))]
-    (is (clojure.string/includes? edn "latent-entity frontier"))
-    (is (clojure.string/includes? edn ":latent/organism :org.a"))
-    (is (clojure.string/includes? edn ":latent/frontier :fission-ready"))
-    (is (clojure.string/includes? edn ":latent/method-version \"latent-resolve/v1-noisy-or\""))))
+    (is (kotoba.lang.text/includes? edn "latent-entity frontier"))
+    (is (kotoba.lang.text/includes? edn ":latent/organism :org.a"))
+    (is (kotoba.lang.text/includes? edn ":latent/frontier :fission-ready"))
+    (is (kotoba.lang.text/includes? edn ":latent/method-version \"latent-resolve/v1-noisy-or\""))))

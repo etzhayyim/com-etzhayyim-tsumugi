@@ -7,7 +7,7 @@
   G6 / ADR-2605215000: religious-corp inference is Murakumo-fleet-only — `assert-murakumo`
   refuses any non-fleet host (external OpenAI/Anthropic-direct/RunPod/Vertex/Bedrock prohibited)
   even in dry-run, so a misconfig is caught early. S1 aggregate-only · mirror · published=false (G7)."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def MURAKUMO-BASE-URL "http://127.0.0.1:4000")
 (def MURAKUMO-MODEL "gemma3:4b")           ; Maxwell (Gemma 4 E4B) = target weight
@@ -36,7 +36,7 @@
   [u]
   (let [m (re-find #"^[a-zA-Z][a-zA-Z0-9+.\-]*://(\[[^\]]*\]|[^/:?#]*)" (str u))
         h (some-> m second (str/replace "[" "") (str/replace "]" ""))]
-    (str/lower-case (or h ""))))
+    (str/lower (or h ""))))
 
 (defn assert-murakumo
   "G6 — refuse any inference host that is not the Murakumo fleet."

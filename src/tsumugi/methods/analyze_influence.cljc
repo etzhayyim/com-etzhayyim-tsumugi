@@ -33,7 +33,7 @@
   Keywords stay as ':ns/name' STRINGS (EDN reader convention), 1:1 with the Python.
   main/CLI + file I/O legs are omitted (consistent with the py→clj port wave); the live
   / outward legs are G7 + Council-gated and not ported."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze :as an]
             #?(:clj [clojure.java.io :as io])))
 

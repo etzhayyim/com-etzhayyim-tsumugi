@@ -16,7 +16,7 @@
   realised-value distribution (flow散っている → 成果へ集中 ⇒ high order). EVERYTHING is PURE and
   deterministic (no wall clock, no randomness) so a measurement is content-addressable and a
   tournament reproducible. Stdlib only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 ;; ── Shannon entropy over a distribution (the user's formulas, verbatim shape) ─
 

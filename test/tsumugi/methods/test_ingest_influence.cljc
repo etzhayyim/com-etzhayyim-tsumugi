@@ -9,7 +9,7 @@
     N5  ingest-offline drops backward-in-time edges and reports them as dropped.
     G7  live network functions are not callable in this port (asserted absent)."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.ingest-influence :as ii]))
 
 ;; ── slug ─────────────────────────────────────────────────────────────────────────────────

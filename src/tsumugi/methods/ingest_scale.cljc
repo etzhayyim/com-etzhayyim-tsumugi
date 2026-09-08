@@ -11,7 +11,7 @@
   live only in the Python main, omitted from this port; the offline membrane (normalize-rows /
   ingest-offline / make-* / admit) is pure stdlib, network-free. Depends on the already-ported
   analyze-scale (load-graph + validate-node/-tie). File I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as asc]
             #?(:clj [clojure.java.io :as io])
             #?(:clj [cheshire.core :as json])))
@@ -36,14 +36,14 @@
    "volkswagen" "org.ext.volkswagen-ag" "sony" "org.ext.sony-group"})
 
 (defn slug [label]
-  (let [s (-> (str (or label "")) str/lower-case (str/replace #"[^a-z0-9]+" "-")
+  (let [s (-> (str (or label "")) str/lower (str/replace #"[^a-z0-9]+" "-")
               (str/replace #"^-+|-+$" ""))]
     (if (str/blank? s) "x" s)))
 
 (defn locality-of [country]
   (if (str/blank? (str country))
     "ext.unknown"
-    (let [c (str/lower-case (str/trim (str country)))]
+    (let [c (str/lower (str/trim (str country)))]
       (if (re-matches #"[a-z]{2}" c)
         (if (= c "gb") "uk" c)
         (get COUNTRY-CODE c (str "ext." (slug country)))))))
@@ -125,11 +125,11 @@
                (or (re-matches #"Q\d+" child) (re-matches #"Q\d+" parent))
                (update acc :dropped conj [child "no real label (raw QID) — quality drop"])
                :else
-               (let [calias (get PARENT-ALIASES (str/lower-case child))
+               (let [calias (get PARENT-ALIASES (str/lower child))
                      [child-id cnode] (if (and calias (contains? (:seen-nodes acc) calias))
                                         [calias nil]
                                         (let [n (make-org-node child (get r "country"))] [(get n ":pwr/id") n]))
-                     palias (get PARENT-ALIASES (str/lower-case parent))
+                     palias (get PARENT-ALIASES (str/lower parent))
                      [parent-id pnode] (if (and palias (contains? (:seen-nodes acc) palias))
                                          [palias nil]
                                          (let [n (make-org-node parent (get r "country"))] [(get n ":pwr/id") n]))

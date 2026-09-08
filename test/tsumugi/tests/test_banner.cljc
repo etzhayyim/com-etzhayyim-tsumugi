@@ -13,7 +13,7 @@
     - non-adjudicating: no threat token anywhere in the rendered output
     - determinism"
   (:require [clojure.test :refer [deftest is run-tests]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-banner :as B]
             #?(:clj [clojure.java.io :as io])))
 

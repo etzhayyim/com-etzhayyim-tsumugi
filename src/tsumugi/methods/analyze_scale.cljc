@@ -14,7 +14,7 @@
     S5 non-adjudicating — verdict tokens (癒着/談合/capture…) as a :tie/kind raise.
 
   Pure stdlib (pywasm-ready); file I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             #?(:clj [clojure.java.io :as io])))
 
 ;; ── minimal EDN reader (manual-replace strings, matching analyze_scale._atom) ──────────────

@@ -7,7 +7,7 @@
   datom set and embedded verbatim — a genuine cross-language oracle. The observer
   discipline is pinned: only :fission-ready datoms are selected, proposals are sorted +
   carry the Council-Lv7-gated review status, and NOTHING is minted/claimed."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.fission-gate :as fg]))
 
 (def latent
@@ -40,15 +40,15 @@
 
 (deftest to-edn-is-observer-only-and-deterministic
   (let [edn (fg/to-edn (fg/emit-proposals (fg/select-fission-ready latent)))]
-    (is (clojure.string/includes? edn "observer-only"))
-    (is (clojure.string/includes? edn "Council Lv7+"))
-    (is (clojure.string/includes? edn "no DID minted, no server key"))
+    (is (kotoba.lang.text/includes? edn "observer-only"))
+    (is (kotoba.lang.text/includes? edn "Council Lv7+"))
+    (is (kotoba.lang.text/includes? edn "no DID minted, no server key"))
     ;; alpha appears before zeta (sorted), both with the gated status
     (is (< (.indexOf edn ":org.alpha") (.indexOf edn ":org.zeta")))
-    (is (clojure.string/includes? edn ":proposal/gate :council-lv7-unanimity"))
+    (is (kotoba.lang.text/includes? edn ":proposal/gate :council-lv7-unanimity"))
     ;; existence + evidence-count carried through as bare numbers
-    (is (clojure.string/includes? edn ":proposal/existence 0.7"))
-    (is (clojure.string/includes? edn ":proposal/evidence-count 3"))))
+    (is (kotoba.lang.text/includes? edn ":proposal/existence 0.7"))
+    (is (kotoba.lang.text/includes? edn ":proposal/evidence-count 3"))))
 
 (deftest empty-when-none-fission-ready
   (is (= [] (fg/select-fission-ready [{":latent/organism" ":x" ":latent/frontier" ":latent"}])))

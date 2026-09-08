@@ -22,7 +22,7 @@
 
   Pure fns; deterministic; string-keyed post records (house style). Stdlib only —
   the growth (live signing/broadcast) happens actor-side on the mesh, not here."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def DISCLAIMER
   (str "【観測ミラー / 取-concentration release map — NOT a target-list, 非断定・person-excluded】 "

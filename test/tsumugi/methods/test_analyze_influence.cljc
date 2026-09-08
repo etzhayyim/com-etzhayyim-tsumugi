@@ -13,7 +13,7 @@
     N4 public+settled: normalize-entity refuses living entries (no deathYear).
     N5 temporal DAG:  check-temporal-dag finds zero violations on the clean seed."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-influence :as ai]))
 
 (def seed-path "data/seed-influence-history.kotoba.edn")

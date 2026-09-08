@@ -8,7 +8,7 @@
 
   stdlib only (reuses analyze-scale's EDN loader + closed vocabs); file I/O at the
   #?(:clj) edge. `compute` is pure over already-loaded records."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as a]
             #?(:clj [clojure.java.io :as io])))
 

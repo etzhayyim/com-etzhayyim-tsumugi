@@ -7,7 +7,7 @@
   80-data / apex artifact is touched); the gz-artifact CIDs are checked structurally (valid
   single-block CIDv1 bafkrei…, <256KiB, round-trip) — not byte-equal to Python's, since the
   java gzip encoder differs from Python's zlib (documented in the ns)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [clojure.java.io :as io]
             [cheshire.core :as json]
             [tsumugi.methods.publish-ipfs :as P]
@@ -32,7 +32,7 @@
         pm (P/pin :data-dir data :apex-dir apex)
         a (get pm "artifacts")]
     (is (= 3 (count a)))
-    (is (every? #(clojure.string/starts-with? (get % "cid") "bafkrei") (vals a)))
+    (is (every? #(kotoba.lang.text/starts-with? (get % "cid") "bafkrei") (vals a)))
     (is (every? #(< (get % "bytes") (* 256 1024)) (vals a)))
     ;; the gz on disk decompresses byte-identical to the seed
     (let [seed (.getBytes (slurp "data/seed-scale-power.kotoba.edn") "UTF-8")
@@ -49,16 +49,16 @@
 (deftest manifest-and-descriptors-valid
   (let [data (tmp-dir) apex (tmp-dir)
         pm (P/pin :data-dir data :apex-dir apex)]
-    (is (clojure.string/includes? (get pm "license") "Charter"))
+    (is (kotoba.lang.text/includes? (get pm "license") "Charter"))
     (is (= publish/PUBLISHER-DID (get pm "publisher")))
-    (is (clojure.string/starts-with? (get pm "contentHash_ntriples") "sha256:"))
+    (is (kotoba.lang.text/starts-with? (get pm "contentHash_ntriples") "sha256:"))
     (is (>= (count (get pm "gateways")) 2))
     ;; /ns/power vocabulary
     (let [vocab (json/parse-string (slurp (str apex "/ns/power")))]
       (is (= publish/NS (get-in vocab ["@context" "@vocab"])))
-      (is (some #(clojure.string/includes? % "concentration") (keys (get vocab "terms")))))
+      (is (some #(kotoba.lang.text/includes? % "concentration") (keys (get vocab "terms")))))
     ;; /dataset descriptor carries CIDs + fetch links
     (let [dsd (json/parse-string (slurp (str apex "/dataset/tsumugi-power.json")))]
-      (is (clojure.string/starts-with? (get-in dsd ["artifacts" "graph" "cid"]) "bafkrei"))
-      (is (clojure.string/ends-with? (first (get-in dsd ["fetch" "graph"]))
+      (is (kotoba.lang.text/starts-with? (get-in dsd ["artifacts" "graph" "cid"]) "bafkrei"))
+      (is (kotoba.lang.text/ends-with? (first (get-in dsd ["fetch" "graph"]))
                                      (get-in dsd ["artifacts" "graph" "cid"]))))))

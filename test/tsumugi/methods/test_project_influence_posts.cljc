@@ -5,7 +5,7 @@
   Pins the N2 mirror-only / observer-voice / dry-run discipline + the exact projected text for
   a flow post ('観察: 「Plato」 shaped 「Aristotle」 … weight +0.80 …') and a node post."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.project-influence-posts :as pip]))
 
 (def nodes

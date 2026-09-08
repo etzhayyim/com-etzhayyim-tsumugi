@@ -7,7 +7,7 @@
   and embedded verbatim — a genuine cross-language oracle. Pins: only :evidence edges
   count, coherence = distinct-entities-with-viewpoint / entities-with-any-evidence,
   binding-confidence = clamped Σ evidence-weight, deterministic sort."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.topics :as tp]))
 
 (def edges
@@ -56,11 +56,11 @@
 (deftest to-edn-shape
   (let [[topics bindings] (tp/derive-topics edges)
         edn (tp/to-edn topics bindings)]
-    (is (clojure.string/includes? edn "GENERATED topic graph"))
-    (is (clojure.string/includes? edn ":topic/viewpoint :labor"))
-    (is (clojure.string/includes? edn ":en/from \"topic.labor\""))   ; plain string quoted
-    (is (clojure.string/includes? edn ":en/to :ent.a"))              ; keyword kept bare
-    (is (clojure.string/includes? edn ":en/stability 1.0"))))
+    (is (kotoba.lang.text/includes? edn "GENERATED topic graph"))
+    (is (kotoba.lang.text/includes? edn ":topic/viewpoint :labor"))
+    (is (kotoba.lang.text/includes? edn ":en/from \"topic.labor\""))   ; plain string quoted
+    (is (kotoba.lang.text/includes? edn ":en/to :ent.a"))              ; keyword kept bare
+    (is (kotoba.lang.text/includes? edn ":en/stability 1.0"))))
 
 (deftest empty-edges-yield-nothing
   (let [[topics bindings] (tp/derive-topics [])]
