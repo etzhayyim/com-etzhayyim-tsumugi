@@ -7,7 +7,7 @@
   verbatim (merged 100 = orgs 39 + edges 61, 12 latent; per-source counts seed 73 /
   atproto 18 / latent-evidence 9) — a genuine cross-language oracle. Pins: dedup
   first-wins, the G1/G5 latent + :representative defaults on non-seed orgs."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.ingest :as ing]))
 
 (defn- woven [] (ing/weave))
@@ -57,7 +57,7 @@
 
 (deftest to-edn-shape
   (let [edn (ing/to-edn [{":organism/id" ":org.a" ":organism/label" "Alpha" ":organism/claimed?" false}])]
-    (is (clojure.string/includes? edn "GENERATED woven graph"))
-    (is (clojure.string/includes? edn ":organism/id :org.a"))
-    (is (clojure.string/includes? edn ":organism/label \"Alpha\""))
-    (is (clojure.string/includes? edn ":organism/claimed? false"))))
+    (is (kotoba.lang.text/includes? edn "GENERATED woven graph"))
+    (is (kotoba.lang.text/includes? edn ":organism/id :org.a"))
+    (is (kotoba.lang.text/includes? edn ":organism/label \"Alpha\""))
+    (is (kotoba.lang.text/includes? edn ":organism/claimed? false"))))

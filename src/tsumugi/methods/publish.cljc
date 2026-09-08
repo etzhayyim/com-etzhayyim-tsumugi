@@ -10,7 +10,7 @@
   Emits (local files): etzhayyim-power-graph.{nt,jsonld} + dataset-manifest.json. NOT IPFS,
   NOT a network publish. stdlib only; its only dependency is the already-ported analyze-scale
   (load-graph + analyze). SHA-256 via java.security.MessageDigest; file I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as a]
             #?(:clj [clojure.java.io :as io]))
   #?(:clj (:import [java.security MessageDigest])))

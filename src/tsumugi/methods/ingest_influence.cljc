@@ -22,7 +22,7 @@
                        fetch-pantheon-people, write-merge, main.
 
   Depends on analyze-influence (load + node-year). File I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-influence :as ai]
             #?(:clj [clojure.java.io :as io])
             #?(:clj [cheshire.core :as json])))
@@ -36,7 +36,7 @@
   Mirrors: re.sub(r'[^a-z0-9]+', '-', label.lower()).strip('-'); then take tail after last '-'."
   [label]
   (let [s (-> (str (or label ""))
-              str/lower-case
+              str/lower
               (str/replace #"[^a-z0-9]+" "-")
               (str/replace #"^-+|-+$" ""))]
     (if (and (not (str/blank? s)) (str/includes? s "-"))

@@ -7,7 +7,7 @@
   17 streams covered (none missing), density 0.020286. This is the PURE-loader leaf of
   analyze_influence (the numpy spectral layout stays unported)."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.coverage-report :as cr]))
 
 (def seed-path "data/seed-influence-history.kotoba.edn")

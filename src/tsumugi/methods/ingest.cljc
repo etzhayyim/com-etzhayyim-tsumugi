@@ -14,7 +14,7 @@
   The pure merge (weave-sources) takes already-loaded labelled sources; the file read + glob
   live at the #?(:clj) edge. read-edn is the shared analyze-scale reader (same EDN family;
   the Python `from analyze import read_edn` is byte-identical logic). stdlib only."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as asc]
             #?(:clj [clojure.java.io :as io])))
 

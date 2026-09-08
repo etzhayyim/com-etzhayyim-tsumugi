@@ -12,7 +12,7 @@
   gz artifact's CID is NOT byte-identical to the Python-published one — it is still a valid
   single-block CIDv1 and round-trips; the cidv1-raw primitive itself IS byte-exact (the
   `ipfs add` vector). SHA-256 + gzip via java.*."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [cheshire.core :as json]
             [tsumugi.methods.publish :as publish]
             [multiformats.core :as mf]

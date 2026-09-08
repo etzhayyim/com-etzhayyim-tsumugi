@@ -8,7 +8,7 @@
   into the seed via aliases), the first new node is org.ext.youtube, the first new tie is
   tie.ext.alphabet-inc.youtube — plus exact pure-helper values. A genuine cross-language oracle.
   The live Wikidata/GLEIF fetch is not part of this port (network leg)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.ingest-scale :as is*]))
 
 ;; ── pure helpers (exact oracle) ────────────────────────────────────────────────
@@ -66,9 +66,9 @@
     (is (= 525 (get p "frontier_tips")))
     (is (= 406 (get p "anchor_qids_available")))
     (is (= false (get p "starving")))
-    (is (clojure.string/starts-with? (get p "recommendation") "GROW → next ring anchors on 525"))
+    (is (kotoba.lang.text/starts-with? (get p "recommendation") "GROW → next ring anchors on 525"))
     (is (= 15 (count (get p "frontier_sample"))))
-    (is (clojure.string/includes? (get p "niche") "植物-producer"))))
+    (is (kotoba.lang.text/includes? (get p "niche") "植物-producer"))))
 
 (deftest derive-seed-qids-count
   (is (= 406 (count (is*/derive-seed-qids "data/seed-scale-power.kotoba.edn")))))

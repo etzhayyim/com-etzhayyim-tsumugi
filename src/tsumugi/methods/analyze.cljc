@@ -24,7 +24,7 @@
   Keywords stay as ':ns/name' STRINGS (EDN reader convention), 1:1 with the Python.
   main/CLI + file I/O legs are omitted (consistent with the py→clj port wave); the live
   / outward atproto-follow legs are G7 + Council-gated and not ported."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             #?(:clj [clojure.java.io :as io])))
 
 ;; ── minimal EDN reader (subset; mirrors analyze._tokens/_atom/_parse/read_edn) ───────────

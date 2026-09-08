@@ -7,7 +7,7 @@
   seed-banner .kotoba.edn and embedded verbatim (628 nodes / 637 ties / 80 distinct
   localities / 13 banners / 5 ents / 14 flies; 40 countries; all scales/kinds/sectors
   exercised; 576 :san nodes → world-listed numerator) — a genuine cross-language oracle."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.coverage-scale :as cs]))
 
 (defn- c [] (apply cs/compute (cs/load-data)))
@@ -52,6 +52,6 @@
 
 (deftest render-is-honest-framing
   (let [md (cs/render (c))]
-    (is (clojure.string/includes? md "real-world coverage is ~0 BY DESIGN"))
-    (is (clojure.string/includes? md "Power nodes: 628"))
-    (is (clojure.string/includes? md "non-adjudicating"))))
+    (is (kotoba.lang.text/includes? md "real-world coverage is ~0 BY DESIGN"))
+    (is (kotoba.lang.text/includes? md "Power nodes: 628"))
+    (is (kotoba.lang.text/includes? md "non-adjudicating"))))

@@ -6,7 +6,7 @@
   even in dry-run, the fleet host with gate=false is a clean (nil,\"dry-run\"); digest+datoms are
   valid kotoba-EDN with published=false (G7) and no per-person entity (S2)."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.narrate :as N]
             [tsumugi.methods.analyze-scale :as asc]))
 

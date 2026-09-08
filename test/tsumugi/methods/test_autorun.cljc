@@ -8,7 +8,7 @@
   5179, frontier-tips 525, harvested 99, country-coverage 20.5128, forage 'GROW …'); the cid
   is structural (publish's content-hash over the real seed is map-order-dependent, so it need
   only be a well-formed tx:sha256 that is deterministic within the runtime and chains)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [tsumugi.methods.autorun :as autorun]))
 
 (defn- tmp []
@@ -23,7 +23,7 @@
     (try
       (let [b (autorun/beat log :out-dir out)
             d (get b "datoms")]
-        (is (clojure.string/starts-with? (get b "cid") "tx:sha256:"))
+        (is (kotoba.lang.text/starts-with? (get b "cid") "tx:sha256:"))
         (is (= 26 (count (get b "cid"))))
         (is (= "tx:genesis" (get b "prev")))
         (is (= 0 (get b "beat")))

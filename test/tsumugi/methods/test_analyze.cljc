@@ -24,7 +24,7 @@
   refuse. The constitutional invariant tested is that held/bound/concentration are the
   edge-integral and never a stored node attribute."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [tsumugi.methods.analyze :as a]))
 
 (def seed-path "data/seed-power-graph.kotoba.edn")

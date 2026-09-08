@@ -9,7 +9,7 @@
   time only (beat index), so same seed + same cycle count → byte-identical head CID (within a
   runtime). Depends on the already-ported same-actor ingest-scale (forage-plan) + publish +
   coverage-scale. The argparse main is omitted. SHA-256 via java.security; file I/O at #?(:clj)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.ingest-scale :as ingest-scale]
             [tsumugi.methods.publish :as publish]
             [tsumugi.methods.coverage-scale :as coverage-scale]

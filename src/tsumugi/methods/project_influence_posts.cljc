@@ -7,7 +7,7 @@
   there is no branch that emits first-person text); G7: published false (dry-run). Depends only
   on the pure analyze_influence loaders (used by main, omitted); the projection itself is pure
   stdlib, no numpy. The numpy spectral analyze_influence stays unported."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def KIND-VERB
   {":influences" "shaped" ":transmits" "was transmitted into" ":cites" "is cited by"

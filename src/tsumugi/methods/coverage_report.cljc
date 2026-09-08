@@ -10,7 +10,7 @@
   Depends only on the PURE loader of analyze_influence (`load` / read-edn — numpy is NOT used by
   load or by this module; the numpy spectral-layout part of analyze_influence stays unported).
   Reuses the shared analyze-scale EDN reader. stdlib only; file I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as asc]
             #?(:clj [clojure.java.io :as io])))
 

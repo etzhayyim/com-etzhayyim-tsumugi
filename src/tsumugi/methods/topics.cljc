@@ -9,7 +9,7 @@
 
   stdlib only, deterministic. The Python `read_edn` import is used only by main (file read),
   omitted from this port; the core takes already-loaded edges."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn v
   "Format a value for EDN output (ingest.py style)."
