@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; tsumugi 紡ぎ — ie-flow embedding (the SoS scoring leg) via the shared gate-adapter.
 (ns tsumugi.methods.ie-flow
   "ie_flow.cljc — tsumugi 紡ぎ embeds the information-energy flow lifecycle

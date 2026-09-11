@@ -9,11 +9,11 @@ EDN is canonical; tracked JSON is confined to `wire/` as external fixtures and
 identity descriptors.
 
 ```bash
-bb test
-bb -m tsumugi.methods.analyze
-bb -m tsumugi.methods.analyze-influence
-bb -m tsumugi.methods.analyze-scale
-bb -m tsumugi.methods.coverage-report
+kbb -M:test
+kbb -m tsumugi.methods.analyze
+kbb -m tsumugi.methods.analyze-influence
+kbb -m tsumugi.methods.analyze-scale
+kbb -m tsumugi.methods.coverage-report
 ```
 
 Code lives in `src/tsumugi/`, tests in `test/tsumugi/`, canonical data in
