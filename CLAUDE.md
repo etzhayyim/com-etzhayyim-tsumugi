@@ -9,4 +9,4 @@
   BPMN, or former monorepo paths.
 - Preserve map-not-target, person-exclusion, provenance, dry-run publication,
   Murakumo-only inference, and fission-gate invariants.
-- Run `bb test` before publishing changes.
+- Run `kbb -M:test` before publishing changes.
