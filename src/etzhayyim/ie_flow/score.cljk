@@ -21,7 +21,7 @@
   scoreboard reproducible. Weights are DATA (score-weights.edn) — re-weighting the whole SoS is a
   data edit, not code. Stdlib + ie-flow.metrics only."
   (:require [etzhayyim.ie-flow.metrics :as m]
-            #?(:clj [clojure.edn :as edn])
+            #?(:clj [kotoba.lang.edn :as edn])
             #?(:clj [clojure.java.io :as io])))
 
 ;; ── defaults (mirror score-weights.edn; the EDN can override via load-weights) ──
