@@ -7,7 +7,7 @@
   and embedded verbatim — a genuine cross-language oracle. Pins: only :evidence edges
   count, coherence = distinct-entities-with-viewpoint / entities-with-any-evidence,
   binding-confidence = clamped Σ evidence-weight, deterministic sort."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.topics :as tp]))
 
 (def edges

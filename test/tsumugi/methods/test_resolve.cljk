@@ -7,7 +7,7 @@
   verbatim — a genuine cross-language oracle. Pins: only latent (unclaimed / :latent)
   orgs resolved, existence = noisy-OR over :evidence edges (round-4), the frontier
   classification, and aggregate-first method-versioning (G2/N1)."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.resolve :as r]))
 
 (def orgs

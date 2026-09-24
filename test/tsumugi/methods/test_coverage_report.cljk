@@ -6,7 +6,7 @@
   / 125 edges / 45 figures, 1 connected component (largest 79) / 0 isolated, all 11 eras +
   17 streams covered (none missing), density 0.020286. This is the PURE-loader leaf of
   analyze_influence (the numpy spectral layout stays unported)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.coverage-report :as cr]))
 

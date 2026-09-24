@@ -7,7 +7,7 @@
       lines and the exact sha256 content-address (68cbd922…) — byte-identical because the
       fixture's iteration order is fixed; (2) the committed seed → order-independent counts
       (628 nodes / 637 edges / 31 localities / 5179 triples)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.publish :as pub]
             [tsumugi.methods.analyze-scale :as a]))
 

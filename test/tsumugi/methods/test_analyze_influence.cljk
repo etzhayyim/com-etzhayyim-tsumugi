@@ -12,7 +12,7 @@
     N3 non-eschat.:   no :verdict/:salvation/:afterlife key in any emitted datom.
     N4 public+settled: normalize-entity refuses living entries (no deathYear).
     N5 temporal DAG:  check-temporal-dag finds zero violations on the clean seed."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-influence :as ai]))
 
