@@ -22,7 +22,7 @@
     :cost        per-row assessment cost (default 2.0; cheap — the actor only assesses)
   Every event: {:id :actor :source :target :type :volume :value :cost :risk 0.0 :agent? true}."
   (:require [etzhayyim.ie-flow.metrics :as iem]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 (def default-value-scale 100.0)
 (def default-assess-cost 2.0)
