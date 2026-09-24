@@ -7,7 +7,7 @@
   80-data / apex artifact is touched); the gz-artifact CIDs are checked structurally (valid
   single-block CIDv1 bafkrei…, <256KiB, round-trip) — not byte-equal to Python's, since the
   java gzip encoder differs from Python's zlib (documented in the ns)."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [clojure.java.io :as io]
             [cheshire.core :as json]
             [tsumugi.methods.publish-ipfs :as P]

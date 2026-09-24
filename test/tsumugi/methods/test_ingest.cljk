@@ -7,7 +7,7 @@
   verbatim (merged 100 = orgs 39 + edges 61, 12 latent; per-source counts seed 73 /
   atproto 18 / latent-evidence 9) — a genuine cross-language oracle. Pins: dedup
   first-wins, the G1/G5 latent + :representative defaults on non-seed orgs."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.ingest :as ing]))
 
 (defn- woven [] (ing/weave))

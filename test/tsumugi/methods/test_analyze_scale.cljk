@@ -8,7 +8,7 @@
   jp.aichi concentration 13.2; :national scale load 356.88; :keiretsu collective load
   636.6; vertical root org.corp.jp.7203 scale-span 3) — a genuine cross-language oracle.
   The S1/S2/S5/range validator refusals mirror the Python ValueErrors."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.analyze-scale :as a]))
 
 (def seed-path "data/seed-scale-power.kotoba.edn")

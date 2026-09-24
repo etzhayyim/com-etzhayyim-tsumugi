@@ -5,7 +5,7 @@
   Pins: (A) locality/broker/vertical + (B) camp/bridge prompt text; G6 — an external host RAISES
   even in dry-run, the fleet host with gate=false is a clean (nil,\"dry-run\"); digest+datoms are
   valid kotoba-EDN with published=false (G7) and no per-person entity (S2)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.narrate :as N]
             [tsumugi.methods.analyze-scale :as asc]))

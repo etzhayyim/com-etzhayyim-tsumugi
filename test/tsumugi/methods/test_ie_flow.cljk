@@ -1,6 +1,6 @@
 ;; tsumugi 紡ぎ — ie-flow embedding tests (the SoS scoring leg). ADR-2606212200.
 (ns tsumugi.methods.test-ie-flow
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.test :refer [deftest is run-tests]]
             [tsumugi.methods.ie-flow :as ief]
             [etzhayyim.ie-flow.score :as score]))
 

@@ -8,7 +8,7 @@
   5179, frontier-tips 525, harvested 99, country-coverage 20.5128, forage 'GROW …'); the cid
   is structural (publish's content-hash over the real seed is map-order-dependent, so it need
   only be a well-formed tx:sha256 that is deterministic within the runtime and chains)."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.autorun :as autorun]))
 
 (defn- tmp []

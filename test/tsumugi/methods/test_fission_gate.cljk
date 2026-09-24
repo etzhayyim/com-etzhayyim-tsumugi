@@ -7,7 +7,7 @@
   datom set and embedded verbatim — a genuine cross-language oracle. The observer
   discipline is pinned: only :fission-ready datoms are selected, proposals are sorted +
   carry the Council-Lv7-gated review status, and NOTHING is minted/claimed."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.fission-gate :as fg]))
 
 (def latent

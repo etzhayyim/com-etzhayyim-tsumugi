@@ -12,7 +12,7 @@
     - H7: an under-sourced :flies (<2) RAISES
     - non-adjudicating: no threat token anywhere in the rendered output
     - determinism"
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.test :refer [deftest is run-tests]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-banner :as B]
             #?(:clj [clojure.java.io :as io])))

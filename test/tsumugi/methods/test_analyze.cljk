@@ -23,7 +23,7 @@
   here — the analyzer computes held/bound on read; there is no settable per-node score to
   refuse. The constitutional invariant tested is that held/bound/concentration are the
   edge-integral and never a stored node attribute."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.analyze :as a]))
 

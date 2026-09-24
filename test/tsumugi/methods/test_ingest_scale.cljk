@@ -8,7 +8,7 @@
   into the seed via aliases), the first new node is org.ext.youtube, the first new tie is
   tie.ext.alphabet-inc.youtube — plus exact pure-helper values. A genuine cross-language oracle.
   The live Wikidata/GLEIF fetch is not part of this port (network leg)."
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.ingest-scale :as is*]))
 
 ;; ── pure helpers (exact oracle) ────────────────────────────────────────────────
