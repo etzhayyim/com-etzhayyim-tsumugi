@@ -7,7 +7,7 @@
   80-data / apex artifact is touched); the gz-artifact CIDs are checked structurally (valid
   single-block CIDv1 bafkrei…, <256KiB, round-trip) — not byte-equal to Python's, since the
   java gzip encoder differs from Python's zlib (documented in the ns)."
-  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.text] [kotoba.test :refer [deftest is testing]]
             [clojure.java.io :as io]
             [cheshire.core :as json]
             [tsumugi.methods.publish-ipfs :as P]
@@ -15,7 +15,7 @@
 
 (defn- tmp-dir []
   (let [f (java.io.File/createTempFile "tsumugi-pub-test" "")] (.delete f) (.mkdirs f) (.getAbsolutePath f)))
-(defn- b [s] (.getBytes (str s) "UTF-8"))
+(defn- b [s] (kbytes/utf8-bytes (str s)))
 
 (deftest cidv1-raw-matches-ipfs-add-vector
   (is (= "bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq" (P/cidv1-raw (b "hello")))))
@@ -25,7 +25,7 @@
                                (P/gz* (b (apply str (repeat 1000 "x")))))))
 
 (deftest gz-roundtrips
-  (is (= "hello 日本語" (String. (P/gunzip* (P/gz* (b "hello 日本語"))) "UTF-8"))))
+  (is (= "hello 日本語" (kbytes/utf8-string (P/gunzip* (P/gz* (b "hello 日本語")))))))
 
 (deftest pin-content-addresses-three-single-block-artifacts
   (let [data (tmp-dir) apex (tmp-dir)
@@ -35,7 +35,7 @@
     (is (every? #(kotoba.lang.text/starts-with? (get % "cid") "bafkrei") (vals a)))
     (is (every? #(< (get % "bytes") (* 256 1024)) (vals a)))
     ;; the gz on disk decompresses byte-identical to the seed
-    (let [seed (.getBytes (slurp "data/seed-scale-power.kotoba.edn") "UTF-8")
+    (let [seed (kbytes/utf8-bytes (slurp "data/seed-scale-power.kotoba.edn"))
           got (P/gunzip* (with-open [in (io/input-stream (str data "/" (get-in a ["graph" "file"])))
                                      bos (java.io.ByteArrayOutputStream.)]
                            (io/copy in bos) (.toByteArray bos)))]

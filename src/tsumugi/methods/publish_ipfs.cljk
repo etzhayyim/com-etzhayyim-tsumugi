@@ -12,7 +12,7 @@
   gz artifact's CID is NOT byte-identical to the Python-published one — it is still a valid
   single-block CIDv1 and round-trips; the cidv1-raw primitive itself IS byte-exact (the
   `ipfs add` vector). SHA-256 + gzip via java.*."
-  (:require [kotoba.lang.text :as str]
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.text :as str]
             [cheshire.core :as json]
             [tsumugi.methods.publish :as publish]
             [multiformats.core :as mf]
@@ -72,9 +72,9 @@
   (let [tmp (str (java.io.File/createTempFile "tsumugi-pub" ""))
         _ (do (.delete (io/file tmp)) (.mkdirs (io/file tmp)))
         manifest (publish/publish tmp seed)
-        nt (.getBytes (slurp (str tmp "/etzhayyim-power-graph.nt")) "UTF-8")
-        jsonld (.getBytes (slurp (str tmp "/etzhayyim-power-graph.jsonld")) "UTF-8")
-        edn (.getBytes (slurp (str "data/seed-scale-power.kotoba.edn")) "UTF-8")
+        nt (kbytes/utf8-bytes (slurp (str tmp "/etzhayyim-power-graph.nt")))
+        jsonld (kbytes/utf8-bytes (slurp (str tmp "/etzhayyim-power-graph.jsonld")))
+        edn (kbytes/utf8-bytes (slurp (str "data/seed-scale-power.kotoba.edn")))
         _ (io/make-parents (str data-dir "/x"))
         artifacts (reduce
                    (fn [m [key fname raw]]
