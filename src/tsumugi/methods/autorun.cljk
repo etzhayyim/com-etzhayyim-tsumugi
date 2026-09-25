@@ -9,11 +9,11 @@
   time only (beat index), so same seed + same cycle count → byte-identical head CID (within a
   runtime). Depends on the already-ported same-actor ingest-scale (forage-plan) + publish +
   coverage-scale. The argparse main is omitted. SHA-256 via java.security; file I/O at #?(:clj)."
-  (:require [kotoba.lang.text :as str]
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.text :as str]
             [tsumugi.methods.ingest-scale :as ingest-scale]
             [tsumugi.methods.publish :as publish]
             [tsumugi.methods.coverage-scale :as coverage-scale]
-            #?(:clj [clojure.java.io :as io]))
+            #?(:clj [kotoba.io :as io]))
   #?(:clj (:import [java.security MessageDigest])))
 
 (def SEED "data/seed-scale-power.kotoba.edn")
@@ -23,7 +23,7 @@
 
 (defn- sha256-hex [s]
   #?(:clj (let [md (MessageDigest/getInstance "SHA-256")]
-            (.update md (.getBytes (str s) "UTF-8"))
+            (.update md (kbytes/utf8-bytes (str s)))
             (apply str (map #(format "%02x" (bit-and % 0xFF)) (.digest md))))
      :cljs (throw (ex-info "sha256 requires the JVM" {}))))
 
@@ -35,7 +35,7 @@
      "Replay the local log → [head-cid beat-count] (durable across kills)."
      [log-path]
      (let [f (io/file (str log-path))]
-       (if-not (.exists f)
+       (if-not (io/exists? f)
          ["tx:genesis" 0]
          (let [txs (filter #(str/includes? % ":tx/id") (str/split-lines (slurp f)))]
            (if (empty? txs)
@@ -90,8 +90,8 @@
                     (Integer/parseInt (nth argv (inc (.indexOf argv "--cycles")))) 1)
            fresh  (boolean (some #{"--fresh"} argv))
            log    (io/file LOG)]
-       (when (and fresh (.exists log)) (.delete log))
-       (when-let [p (.getParentFile log)] (.mkdirs p))
+       (when (and fresh (io/exists? log)) (io/delete log))
+       (when-let [p (io/parent-file log)] (io/mkdirs p))
        (let [last-beat (reduce (fn [_ _] (beat LOG)) nil (range cycles))]
          (when last-beat
            (let [d (or (:datoms last-beat) (get last-beat "datoms"))]

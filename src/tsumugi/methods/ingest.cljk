@@ -16,7 +16,7 @@
   the Python `from analyze import read_edn` is byte-identical logic). stdlib only."
   (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as asc]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 (defn- key* [rec]
   (cond
@@ -76,8 +76,8 @@
                 "data/ingest"))
      ([seed-path ingest-dir]
       (let [fname (fn [p] (last (str/split (str p) #"/")))
-            ingest-files (->> (.listFiles (io/file ingest-dir))
-                              (map #(.getPath %))
+            ingest-files (->> (io/list-files (io/file ingest-dir))
+                              (map #(io/path %))
                               (filter #(str/ends-with? % ".edn"))
                               sort)
             sources (cons {:name (fname seed-path) :records (asc/read-edn (slurp seed-path)) :seed? true}
@@ -97,16 +97,16 @@
                        "(not implemented). Set TSUMUGI_OPERATOR_GATE + wire "
                        "app.bsky.graph.getFollows under Council (ADR-2605231902), then re-run.")))
        (let [here   (let [f  (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                          pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                      (if (and pp (.isDirectory (io/file pp "data"))) pp (io/file ".")))
+                          pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                      (if (and pp (io/directory? (io/file pp "data"))) pp (io/file ".")))
              {:keys [merged counts]} (weave)
              orgs   (filter #(contains? % ":organism/id") merged)
              edges  (filter #(contains? % ":en/id") merged)
              latent (count (filter #(false? (get % ":organism/claimed?")) orgs))
              out    (io/file here "out")]
-         (.mkdirs out)
+         (io/mkdirs out)
          (spit (io/file out "woven-graph.kotoba.edn") (to-edn merged))
          (println "woven (fixture mode — no network):")
          (doseq [[name n] counts] (println (str "  + " n " new records from " name)))
          (println (str "= " (count orgs) " organisms (" latent " latent/unclaimed) · " (count edges) " 縁"))
-         (println (str "✓ wrote " (.getPath (io/file out "woven-graph.kotoba.edn"))))))))
+         (println (str "✓ wrote " (io/path (io/file out "woven-graph.kotoba.edn"))))))))

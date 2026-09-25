@@ -13,7 +13,7 @@
   analyze-scale (load-graph + validate-node/-tie). File I/O at the #?(:clj) edge."
   (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as asc]
-            #?(:clj [clojure.java.io :as io])
+            #?(:clj [kotoba.io :as io])
             #?(:clj [cheshire.core :as json])))
 
 (def COUNTRY-CODE
@@ -98,12 +98,12 @@
   "Re-validate a candidate node through analyze-scale; on a gate breach drop+log, return false."
   [node dropped]
   (try (asc/validate-node node) [true dropped]
-       (catch #?(:clj clojure.lang.ExceptionInfo :cljs :default) e
+       (catch :default e
          [false (conj dropped [(get node ":pwr/id") (subs (str (ex-message e)) 0 (min 80 (count (str (ex-message e)))))])])))
 
 (defn- admit-tie [tie dropped]
   (try (asc/validate-tie tie) [true dropped]
-       (catch #?(:clj clojure.lang.ExceptionInfo :cljs :default) e
+       (catch :default e
          [false (conj dropped [(get tie ":tie/id") (subs (str (ex-message e)) 0 (min 80 (count (str (ex-message e)))))])])))
 
 (defn normalize-rows
@@ -161,8 +161,8 @@
    (defn ingest-offline
      "Read all *.json fixtures in a dir → rows → normalize-rows (hermetic, no network)."
      [fixtures-dir seed]
-     (let [rows (->> (.listFiles (io/file (str fixtures-dir)))
-                     (map #(.getPath %))
+     (let [rows (->> (io/list-files (io/file (str fixtures-dir)))
+                     (map #(io/path %))
                      (filter #(str/ends-with? % ".json"))
                      sort
                      (mapcat (fn [f] (get (json/parse-string (slurp f)) "orgs")))
@@ -216,15 +216,15 @@
      [& argv]
      (let [argv     (vec argv)
            here     (let [f  (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                          pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                      (if (and pp (.isDirectory (io/file pp "data"))) pp (io/file ".")))
+                          pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                      (if (and pp (io/directory? (io/file pp "data"))) pp (io/file ".")))
            seed     (io/file here "data" "seed-scale-power.kotoba.edn")
            fixtures (io/file here "data" "ingest-scale")
            out      (if (some #{"--out"} argv) (io/file (nth argv (inc (.indexOf argv "--out")))) (io/file here "out"))]
-       (.mkdirs out)
+       (io/mkdirs out)
        (cond
          (some #{"--forage"} argv)
-         (let [plan (forage-plan (.getPath seed))]
+         (let [plan (forage-plan (io/path seed))]
            (spit (io/file out "forage-plan.json") (json/generate-string plan {:pretty true}))
            (println (str "[tsumugi/forage] " (get plan "recommendation") " → out/forage-plan.json")))
          (some #{"--live"} argv)
@@ -233,7 +233,7 @@
                          "scaffold (not ported). Requires TSUMUGI_OPERATOR_GATE=1 + "
                          "TSUMUGI_OPERATOR_DID; offline fixture ingest runs without --live.")))
          :else
-         (let [[_n _t new-nodes new-ties _d] (ingest-offline (.getPath fixtures) (.getPath seed))
+         (let [[_n _t new-nodes new-ties _d] (ingest-offline (io/path fixtures) (io/path seed))
                enode     (fn [coll] (str/join "\n" (map #(str " " (edn %)) coll)))
                add-lines (concat [";; tsumugi 紡ぎ — GENERATED scale ingest (ADR-2606061500). DO NOT hand-edit."
                                   ";; :representative; out/ only — promotion into the committed seed is a separate human-reviewed PR."
@@ -249,4 +249,4 @@
            (spit combined (str (subs base 0 (dec (count base)))
                                "\n ;; ── INGESTED ──\n" (enode new-nodes) "\n" (enode new-ties) "]\n"))
            (println (str "[tsumugi/ingest-scale] +" (count new-nodes) " nodes · +"
-                         (count new-ties) " 縁 → " (.getPath add-file))))))))
+                         (count new-ties) " 縁 → " (io/path add-file))))))))
