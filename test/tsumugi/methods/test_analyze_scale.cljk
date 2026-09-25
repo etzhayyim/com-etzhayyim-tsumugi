@@ -8,7 +8,7 @@
   jp.aichi concentration 13.2; :national scale load 356.88; :keiretsu collective load
   636.6; vertical root org.corp.jp.7203 scale-span 3) — a genuine cross-language oracle.
   The S1/S2/S5/range validator refusals mirror the Python ValueErrors."
-  (:require [kotoba.test :refer [deftest is testing]]
+  (:require [kotoba.lang.error :as kerror] [kotoba.test :refer [deftest is testing]]
             [tsumugi.methods.analyze-scale :as a]))
 
 (def seed-path "data/seed-scale-power.kotoba.edn")
@@ -71,24 +71,24 @@
    ":pwr/sector" ":san" ":pwr/locality" "jp.x"})
 
 (deftest s1-forbids-per-node-score
-  (is (thrown-with-msg? clojure.lang.ExceptionInfo #"S1 breach"
+  (is (thrown-with-msg? kerror/ExceptionInfo #"S1 breach"
                         (a/validate-node (assoc good-node ":pwr/power-score" 0.9)))))
 
 (deftest s2-excludes-private-person
-  (is (thrown-with-msg? clojure.lang.ExceptionInfo #"S2 breach"
+  (is (thrown-with-msg? kerror/ExceptionInfo #"S2 breach"
                         (a/validate-node (assoc good-node ":pwr/standing" ":private-person")))))
 
 (deftest s5-forbids-verdict-tie-kind
-  (is (thrown-with-msg? clojure.lang.ExceptionInfo #"S5 breach"
+  (is (thrown-with-msg? kerror/ExceptionInfo #"S5 breach"
                         (a/validate-tie {":tie/id" "t1" ":tie/kind" ":collusion"
                                          ":tie/sources" ["a" "b"] ":tie/grasping-load" 0.5}))))
 
 (deftest tie-grasping-load-must-be-in-range
-  (is (thrown-with-msg? clojure.lang.ExceptionInfo #"range breach"
+  (is (thrown-with-msg? kerror/ExceptionInfo #"range breach"
                         (a/validate-tie {":tie/id" "t2" ":tie/kind" ":funds"
                                          ":tie/sources" ["a" "b"] ":tie/grasping-load" 1.5}))))
 
 (deftest tie-needs-two-sources
-  (is (thrown-with-msg? clojure.lang.ExceptionInfo #"S4 breach"
+  (is (thrown-with-msg? kerror/ExceptionInfo #"S4 breach"
                         (a/validate-tie {":tie/id" "t3" ":tie/kind" ":funds"
                                          ":tie/sources" ["only-one"] ":tie/grasping-load" 0.5}))))

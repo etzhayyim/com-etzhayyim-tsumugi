@@ -15,7 +15,7 @@
 
   Pure stdlib (pywasm-ready); file I/O at the #?(:clj) edge."
   (:require [kotoba.lang.text :as str]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 ;; ── minimal EDN reader (manual-replace strings, matching analyze_scale._atom) ──────────────
 (def ^:private token-re
@@ -309,14 +309,14 @@
      (let [argv (vec argv)
            args (vec (remove #(str/starts-with? % "--") argv))
            here (let [f  (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                      pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                  (if (and pp (.isDirectory (io/file pp "data"))) pp (io/file ".")))
+                      pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                  (if (and pp (io/directory? (io/file pp "data"))) pp (io/file ".")))
            seed (if (seq args) (io/file (first args)) (io/file here "data" "seed-scale-power.kotoba.edn"))
            out  (if (some #{"--out"} argv) (io/file (nth argv (inc (.indexOf argv "--out")))) (io/file here "out"))
            [nodes ties] (load-graph seed)
            result (analyze nodes ties)]
-       (.mkdirs out)
+       (io/mkdirs out)
        (spit (io/file out "scale-report.md") (render-report result))
        (spit (io/file out "scale-graph.kotoba.edn") (render-graph-edn result))
        (println (str "[tsumugi/scale] " (count nodes) " nodes · " (count ties)
-                     " ties → " (.getPath (io/file out "scale-report.md")))))))
+                     " ties → " (io/path (io/file out "scale-report.md")))))))

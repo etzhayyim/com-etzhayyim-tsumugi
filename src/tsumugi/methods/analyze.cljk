@@ -25,7 +25,7 @@
   main/CLI + file I/O legs are omitted (consistent with the py→clj port wave); the live
   / outward atproto-follow legs are G7 + Council-gated and not ported."
   (:require [kotoba.lang.text :as str]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 ;; ── minimal EDN reader (subset; mirrors analyze._tokens/_atom/_parse/read_edn) ───────────
 (def ^:private token-re
@@ -428,15 +428,15 @@
      (let [argv (vec argv)
            args (vec (remove #(str/starts-with? % "--") argv))
            here (let [f  (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                      pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                  (if (and pp (.isDirectory (io/file pp "data"))) pp
+                      pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                  (if (and pp (io/directory? (io/file pp "data"))) pp
                       (io/file ".")))
            seed (if (seq args) (io/file (first args)) (io/file here "data" "seed-power-graph.kotoba.edn"))
            out  (if (some #{"--out"} argv) (io/file (nth argv (inc (.indexOf argv "--out")))) (io/file here "out"))
            [orgs edges] (load seed)
            result (analyze orgs edges)]
-       (.mkdirs out)
+       (io/mkdirs out)
        (spit (io/file out "spirit-graph.kotoba.edn") (render-graph-edn result))
        (spit (io/file out "intel-report.md") (render-report result))
        (println (str "[tsumugi/analyze] " (count orgs) " organisms · " (count edges)
-                     " 縁 → " (.getPath (io/file out "intel-report.md")))))))
+                     " 縁 → " (io/path (io/file out "intel-report.md")))))))

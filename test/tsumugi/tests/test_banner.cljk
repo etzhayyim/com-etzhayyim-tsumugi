@@ -15,13 +15,13 @@
   (:require [kotoba.test :refer [deftest is run-tests]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-banner :as B]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 #?(:clj
    (defn- seed-path []
      (let [f (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-           pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-       (if (and pp (.isDirectory (io/file pp "data")))
+           pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+       (if (and pp (io/directory? (io/file pp "data")))
          (io/file pp "data" "seed-banner.kotoba.edn")
          (io/file "data" "seed-banner.kotoba.edn")))))
 
@@ -36,7 +36,7 @@
 
 (defn- raises? [edn-text]
   (try (load-text edn-text) false
-       (catch #?(:clj clojure.lang.ExceptionInfo :cljs :default) _ true)))
+       (catch :default _ true)))
 
 (def ent-ok "{:ent/id \"e\" :ent/label \"e\" :ent/standing :institutional}")
 (def ban-ok "{:banner/id \"b\" :banner/label \"b\" :banner/kind :policy-stance}")

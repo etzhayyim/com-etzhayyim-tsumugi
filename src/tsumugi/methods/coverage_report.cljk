@@ -12,7 +12,7 @@
   Reuses the shared analyze-scale EDN reader. stdlib only; file I/O at the #?(:clj) edge."
   (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze-scale :as asc]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 (def ERA-SPINE [":bronze-age" ":iron-age" ":axial" ":2nd-temple" ":late-antiquity"
                 ":early-medieval" ":medieval" ":reformation" ":enlightenment"
@@ -117,12 +117,12 @@
      (let [argv (vec argv)
            args (vec (remove #(str/starts-with? % "--") argv))
            here (let [f  (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                      pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                  (if (and pp (.isDirectory (io/file pp "data"))) pp (io/file ".")))
+                      pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                  (if (and pp (io/directory? (io/file pp "data"))) pp (io/file ".")))
            seed (if (seq args) (io/file (first args)) (io/file here "data" "seed-influence-history.kotoba.edn"))
            out  (if (some #{"--out"} argv) (io/file (nth argv (inc (.indexOf argv "--out")))) (io/file here "out"))
            c    (compute (str seed))]
-       (.mkdirs out)
+       (io/mkdirs out)
        (spit (io/file out "coverage-report.md") (render c))
        (println (str "[tsumugi/coverage] nodes " (get c "nodes") " · edges " (get c "edges")
-                     " → " (.getPath (io/file out "coverage-report.md")))))))
+                     " → " (io/path (io/file out "coverage-report.md")))))))

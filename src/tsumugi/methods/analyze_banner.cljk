@@ -25,7 +25,7 @@
   → 'N.0' (fmt-num) — together they reproduce the f-string bytes. Dict first-insertion order is
   preserved (::order metadata) so STABLE sorts tie exactly the Python dict iteration order."
   (:require [kotoba.lang.text :as str]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 ;; ── minimal EDN reader ────────────────────────────────────────────────────────────────────
 ;; Faithful port of analyze_banner.py's _TOK / _tokens / _atom / _parse. Keywords are kept as
@@ -392,8 +392,8 @@
      (let [argv (vec argv)
            args (vec (remove #(str/starts-with? % "--") argv))
            here (let [f (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                      pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                  (if (and pp (.isDirectory (io/file pp "data")))
+                      pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                  (if (and pp (io/directory? (io/file pp "data")))
                     pp
                     (io/file ".")))
            seed (if (seq args)
@@ -404,7 +404,7 @@
                  (io/file here "out"))
            {:keys [banners ents flies]} (load-file* seed)
            result (analyze banners ents flies)]
-       (.mkdirs out)
+       (io/mkdirs out)
        (spit (io/file out "banner-report.md") (render-report result))
        (spit (io/file out "banner-graph.kotoba.edn") (render-graph-edn result))
        (let [top (first (get result "camps"))]

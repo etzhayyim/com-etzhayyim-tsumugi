@@ -4,7 +4,7 @@
 
   Pins the N2 mirror-only / observer-voice / dry-run discipline + the exact projected text for
   a flow post ('観察: 「Plato」 shaped 「Aristotle」 … weight +0.80 …') and a node post."
-  (:require [kotoba.test :refer [deftest is testing]]
+  (:require [kotoba.lang.error :as kerror] [kotoba.test :refer [deftest is testing]]
             [kotoba.lang.text :as str]
             [tsumugi.methods.project-influence-posts :as pip]))
 
@@ -32,7 +32,7 @@
     (is (str/includes? (get p ":post/text") "「Aristotle」 — public influence-bearing node (figure; hellenic,secular-philosophy)"))))
 
 (deftest n2-refuses-non-mirror
-  (is (thrown-with-msg? clojure.lang.ExceptionInfo #"N2"
+  (is (thrown-with-msg? kerror/ExceptionInfo #"N2"
                         (pip/project-post {":organism/id" ":x"} nil nodes 1))))
 
 (deftest edn-str-shapes-post

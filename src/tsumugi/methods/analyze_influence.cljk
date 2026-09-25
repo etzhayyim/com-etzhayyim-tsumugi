@@ -35,7 +35,7 @@
   / outward legs are G7 + Council-gated and not ported."
   (:require [kotoba.lang.text :as str]
             [tsumugi.methods.analyze :as an]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 ;; ── re-export shared EDN reader from analyze (same family) ───────────────────────────────
 (def read-edn an/read-edn)
@@ -600,14 +600,14 @@
      (let [argv (vec argv)
            args (vec (remove #(str/starts-with? % "--") argv))
            here (let [f  (when (and *file* (not (str/blank? *file*))) (io/file *file*))
-                      pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                  (if (and pp (.isDirectory (io/file pp "data"))) pp (io/file ".")))
+                      pp (some-> f io/absolute-file io/parent-file io/parent-file)]
+                  (if (and pp (io/directory? (io/file pp "data"))) pp (io/file ".")))
            seed (if (seq args) (io/file (first args)) (io/file here "data" "seed-influence-history.kotoba.edn"))
            out  (if (some #{"--out"} argv) (io/file (nth argv (inc (.indexOf argv "--out")))) (io/file here "out"))
            [nodes flows] (load seed)
            result (analyze nodes flows)]
-       (.mkdirs out)
+       (io/mkdirs out)
        (spit (io/file out "influence-graph.kotoba.edn") (render-influence-graph-edn result))
        (spit (io/file out "influence-report.md") (render-influence-report result))
        (println (str "[tsumugi/influence] " (count nodes) " nodes · " (count flows)
-                     " flows → " (.getPath (io/file out "influence-report.md")))))))
+                     " flows → " (io/path (io/file out "influence-report.md")))))))
